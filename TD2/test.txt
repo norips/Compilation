@@ -1,8 +1,1 @@
-Je [trouver] des pommes
-Tu [trouver] des pommes
-Il [trouver] des pommes
-Elle [trouver] des pommes
-Nous [trouver] des pommes
-Vous [trouver] des pommes
-Ils [trouver] des pommes
-Elles [trouver] des pommes
+(((X1 := 2+LONG ; X1 := X1 + 3);X2 := 10) ; while X2 do (X1 := X1 *2))

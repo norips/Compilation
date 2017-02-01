@@ -9,7 +9,7 @@ int res = 0;
 (N|n)ous				{BEGIN Nous;printf("%s",yytext);}
 (V|v)ous				{BEGIN Vous;printf("%s",yytext);}
 ((I|i)ls|(E|e)lles)			{BEGIN IlsElles;printf("%s",yytext);}
-<Je>\[[A-za-z]+er\]			{yytext[yyleng-3]=0;printf("%se",yytext+1);}
+<Je>\[[A-za-z]\]			{yytext[yyleng-3]=0;printf("%se",yytext+1);}
 <Tu>\[[A-za-z]+er\]			{yytext[yyleng-3]=0;printf("%ses",yytext+1);}
 <IlElle>\[[A-za-z]+er\]			{yytext[yyleng-3]=0;printf("%se",yytext+1);}
 <Nous>\[[A-za-z]+er\]			{yytext[yyleng-3]=0;printf("%sons",yytext+1);}
