@@ -1,0 +1,10 @@
+ETQ=ET2	OPE=Sk	ARG=	ARG2=	DEST=
+X2
+ETQ=ET3	OPE=Afc	ARG=10	ARG2=	DEST=
+CT4
+ETQ=ET1	OPE=Pl	ARG=X2	ARG2=CT4	DEST=
+VA5
+Print BILQUAD
+ET2       :(null) :         :                   
+ET3       :(null) :         :                   
+ET1       :(null) :         :                   

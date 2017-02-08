@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS:= -std=gnu99
+CFLAGS:= -std=gnu99 -g -O0
 LDFLAGS:= -lfl
 SRCS = $(wildcard *.l)
 

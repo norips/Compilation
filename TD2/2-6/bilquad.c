@@ -104,7 +104,7 @@ void ecrire_quad(QUAD qd)
 { if(strcmp(qd->ETIQ,"") == 0)       /* etiquette= mot vide */
     {printf("%-10s ","");}
   else
-    {printf("%-10s:",qd->ETIQ);}
+    {printf("%-10s",qd->ETIQ);}
   printf("%-6s ",nomop(qd->OP));
   if (qd->ARG1!=NULL)
     {printf("%-10s",qd->ARG1);}
