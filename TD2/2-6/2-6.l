@@ -12,25 +12,24 @@ char *cpa(char *src){
 } 
 %}
 
-%s OPE ARG ARG2 DEST
+%s OPE ARG_1 ARG_2 DEST
 %%
 
 ET[0-9]+                {
                             BEGIN OPE; free(etiq); etiq=cpa(yytext); 
-                            printf("|ETQ=%s|",etiq); 
                         }
 <OPE>:[A-Za-z]+         {
-                            BEGIN ARG;
+                            BEGIN ARG_1;
                             if(strncmp("Pl",yytext+1,2)==0) {
                                 op = Pl;
                             } else if (strncmp("Mo",yytext+1,2)==0) { 
                                 op = Mo;   
                             } else if (strncmp("Mu",yytext+1,2)==0) { 
                                 op = Mu;   
-                            } else if (strncmp("Af",yytext+1,2)==0) { 
-                                op = Af;   
                             } else if (strncmp("Afc",yytext+1,3)==0) { 
                                 op = Afc;   
+                            } else if (strncmp("Af",yytext+1,2)==0) { 
+                                op = Af;   
                             } else if (strncmp("Sk",yytext+1,2)==0) { 
                                 op = Sk;   
                             } else if (strncmp("Jp",yytext+1,2)==0) { 
@@ -41,12 +40,12 @@ ET[0-9]+                {
                                 op = St;   
                             }              
                         }
-<ARG>:[A-Za-z0-9]*      {
-                            BEGIN ARG2;
+<ARG_1>:[A-Za-z0-9]*      {
+                            BEGIN ARG_2;
                             free(arg1); 
                             arg1=cpa(yytext+1);
                         }
-<ARG2>:[A-Za-z0-9]*        {
+<ARG_2>:[A-Za-z0-9]*        {
                             BEGIN DEST;
                             free(arg2); 
                             arg2=cpa(yytext+1);
@@ -70,4 +69,34 @@ ET[0-9]+                {
 int main(int argc,char *argv[]) {
 	yylex();
 	ecrire_bilquad(list);
+	ENV env = Envalloc();
+	QUAD elem = list.debut;
+	while(elem != NULL) {
+	    /***Afc***/
+	    if(elem->OP == Afc) {
+            initenv(&env,elem->RES);
+            affect(env,elem->RES,atoi(elem->ARG1));
+	    }
+	    /***Pl Mu Mo***/
+	    else if(elem->OP == Pl || elem->OP == Mu || elem->OP == Mo) {
+            initenv(&env,elem->RES);
+            initenv(&env,elem->ARG1);
+            initenv(&env,elem->ARG2);
+            affect(env,elem->RES,eval(elem->OP,valch(env,elem->ARG1),valch(env,elem->ARG2)));
+	    }
+	    else if(elem->OP == Af) {
+            initenv(&env,elem->ARG1);
+            initenv(&env,elem->ARG2);
+            affect(env,elem->ARG1,valch(env,elem->ARG2));
+	    }/*
+	    else if(elem->OP == Afc) {
+            initenv(&env,elem->RES);
+            affect(env,elem->RES,atoi(elem->ARG1));
+	    }*/
+	    elem = elem->SUIV;
+	}
+	
+    ecrire_env(env);
+	
+	
 }

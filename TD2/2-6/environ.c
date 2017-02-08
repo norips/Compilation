@@ -56,7 +56,7 @@ int eval(int op, int arg1, int arg2)
 /* retourne l'adresse de la cellule contenant chaine. NULL si la chaine est absente */
 ENV rech(char *chaine, ENV listident)
 {if (listident!=NULL)
-    {if (strcmp(listident->ID,chaine)==0)
+    {if (listident->ID && strcmp(listident->ID,chaine)==0)
         {return listident;}
       else
 	return rech(chaine,listident->SUIV);

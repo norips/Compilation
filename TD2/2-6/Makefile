@@ -7,7 +7,7 @@ PROGS = $(patsubst %.l,%,$(SRCS))
 
 all: $(PROGS)
 
-%: %.l
+%: %.l environ.c environ.h bilquad.c bilquad.h
 	flex -o $@.yy.c $<
 	$(CC) $(CFLAGS) -c environ.c -o environ.o
 	$(CC) $(CFLAGS) -c bilquad.c -o bilquad.o
