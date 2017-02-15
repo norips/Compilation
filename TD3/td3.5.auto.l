@@ -1,5 +1,5 @@
 %{
-#include "td3.5.y.tab.h"
+#include "td3.5.auto.y.tab.h"
 %}
 
 %%

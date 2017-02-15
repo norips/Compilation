@@ -3,16 +3,17 @@ CFLAGS:= -std=gnu99
 LDFLAGS:= -lfl
 SRCS = $(wildcard *.l)
 
-PROGS = $(patsubst %.l,%,$(SRCS))
+PROGS = $(patsubst %.auto.l,%,$(SRCS))
 
 all: $(PROGS)
 
-%: %.l %.y
-	bison --file-prefix=$@.y -d $@.y
-	$(CC) $(CFLAGS) -c -o $@.y.o $@.y.tab.c
-	flex -o $@.c $< 
-	$(CC) $(CFLAGS) -c -o $@.o $@.c $(LDFLAGS)
-	$(CC) $(CFLAGS) -o $@ $@.o $@.y.o
+%: %.auto.l %.auto.y
+	bison --file-prefix=$@.auto.y -d $@.auto.y
+	$(CC) $(CFLAGS) -c -o $@.auto.y.o $@.auto.y.tab.c
+	flex -o $@.auto.c $< 
+	$(CC) $(CFLAGS) -c -o $@.auto.o $@.auto.c $(LDFLAGS)
+	$(CC) $(CFLAGS) -o $@ $@.auto.o $@.auto.y.o
 
 clean :
-	rm *.c $(PROGS)
+	rm -f *.tab.*
+	rm -f *.o
