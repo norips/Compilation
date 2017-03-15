@@ -14,31 +14,31 @@ ENV e;
 }
 %token Not Af Or Imp Equ And NUMBER Sep
 %token<id> V
-%type<i> E T F
+%type<i> E T F NUMBER
  
 
 
 %%
-prog: C         {;}
+prog: C         {ecrire_env(e);}
 
-E : E And T     {;}
-  | T           {;}
+E : E And T     {$$ = $1 & $3;}
+  | T           {$$ = $1;}
   ;
   
-T : T Or F     {;}
-  | T Imp F     {;}
-  | T Equ F          {;}
-  | F
+T : T Or F     { $$ = $1 | $3;}
+  | T Imp F     {$$ = !$1 || $3;}
+  | T Equ F          {$$ = $1 == $3;}
+  | F           {$$ = $1;}
   ;
   
-F: '(' E ')'		{;}
- | NUMBER			{;}
- | V			{;}
- | Not V			{;}
+F: '(' E ')'		{$$ = $2;}
+ | NUMBER			{$$ = $1;}
+ | V			{initenv(&e,$1); $$ = valch(e, $1);}
+ | Not V			{initenv(&e,$2); $$ = !valch(e, $2);}
  ;
 
   
-C0 : V Af E      {;}
+C0 : V Af E      {initenv(&e,$1); affect(e,$1,$3);}
    | '(' C ')'   {;}
    ;
 
